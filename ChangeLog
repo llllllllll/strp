@@ -1,2 +1,6 @@
 2014-04-06 Joe Jevnik <joejev@gmail.com>
 	* Strp.hs, strp.hs, Strp/Data.hs, Strp/Modules.hs, README.md: Added
+
+2014-04-06 Joe Jevnik <joejev@gmail>
+	* strp.hs: Added filePathModule
+	* Strp/Modules.hs: Added the new filePathModule
