@@ -30,7 +30,7 @@ findModule src = find ((=~) src . strpPattern)
 
 -- | Processes a 'String' with a list of modules.
 processString :: String -> [StrpModule] -> IO ()
-processString src ms = case (strpFunction <$> (findModule src ms)) of
+processString src ms = case strpFunction <$> findModule src ms of
                            Nothing -> putStrLn $ "strp: " ++ src
                                       ++ ": no module used"
                            Just f  -> f src

@@ -37,11 +37,11 @@ helpString = (++) "Usage:" . usageInfo ""
 
 -- | The possible command line options.
 options :: [OptDescr Flag]
-options = [ Option ['v'] ["version"]   (NoArg Version)
+options = [ Option "v" ["version"]   (NoArg Version)
                        "Displays the current version number"
-          , Option ['h'] ["help"]      (NoArg Help)
+          , Option "h" ["help"]      (NoArg Help)
                        "Displays this message"
-          , Option ['c'] ["clipboard"] (NoArg Clipboard)
+          , Option "c" ["clipboard"] (NoArg Clipboard)
                        "Reads the string out of the X primary clipboard"
           ]
 
