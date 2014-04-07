@@ -3,16 +3,25 @@ strp
 
 A program that attempts to mimic plan9 string plumbing.
 
+### What it does ###
+
+strp allows users to take an input string and attempt to preform an action
+on it, based on certain user defined rules. For example: one may make a rule
+that an input of a web URL should open a new tab in their favorite browser, or
+highlighting a single word should open a search on their favorite browser. Maybe
+highlighting a C function brings up the man page. strp is completely modular,
+and users may decide which rules they want to define by adding or removing
+`StrpModule`s in the config strp.hs file.
+
 ### Modules ###
 
 strp uses a modular design, allowing users to add or remove modules as they
-wish. A module is a regular expression pattern matches with a function from
-String to IO (). In the configuration file, strp.hs, users pass a list of
-`StrpModule`s to the strp function, along with the commnand line arguments.
-This list of modules is searched linearly until a match is found, at which
-point the modules function is called on the input string. If no modules match
-the input, the defualt behavior is to print: `strp: <str>: no modules used` to
-stdout to notify the user that nothing has been done.
+wish. A module is a pair of functions, the first being `strpMatch :: String ->
+Bool`, which checks the input string to see if the module should be used, the
+second is `strpFunction :: String -> IO ()`, which is the function that is
+invoked when the module has been matched. To add new modules, just define
+a new `StrpModule` with your rule and function, and add it to the list of
+modules that are passed to the `strp` function in main.
 
 ### Usage ###
 
@@ -24,7 +33,7 @@ Example (using only urlModule):
     $ strp www.fsf.org
 
 This invokes strp with the string `www.fsf.org`. If the user is using the
-provided urlModule to catch urls, then this would call `$BROWSER www.fsf.org`.
+provided urlModule to catch urls, then this would call `firefox www.fsf.org`.
 Users may pass mutiple strings to strp like so:
 
     $ strp www.fsf.org test

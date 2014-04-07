@@ -1,6 +1,14 @@
 2014-04-06 Joe Jevnik <joejev@gmail.com>
 	* Strp.hs, strp.hs, Strp/Data.hs, Strp/Modules.hs, README.md: Added
 
-2014-04-07 Joe Jevnik <joejev@gmail>
+2014-04-06 Joe Jevnik <joejev@gmail>
 	* strp.hs: Added filePathModule
 	* Strp/Modules.hs: Added the new filePathModule
+
+2014-04-07
+	* Strp/Data.hs: Changes the StrpModule to have a String -> Bool instead
+	of a regex to match.
+	* Strp/Modules.hs: Updated the two modules to reflect the strpMatch
+	change.
+	* README.md: Updated the sections to reflect the change in module
+	design.

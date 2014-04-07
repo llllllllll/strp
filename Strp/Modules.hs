@@ -23,10 +23,12 @@ import Control.Monad     (void,when)
 import System.Directory  (doesDirectoryExist,doesFileExist)
 import System.Process    (createProcess,CreateProcess(..),StdStream(..),proc)
 import Text.RawString.QQ (r)
+import Text.Regex.PCRE   ((=~))
 
 -- | A 'StrpModule' for handling url data.
 urlModule :: StrpModule
-urlModule = StrpModule { strpPattern  = [r|(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%]\
+urlModule = StrpModule { strpMatch  = (=~
+                                        [r|(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%]\
 )|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|job\
 s|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|\
 as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|c\
@@ -51,7 +53,7 @@ ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|m\
 z|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw\
 |py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|\
 sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|u\
-z|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))|] -- "
+z|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))|]) -- "
                        , strpFunction = \cs -> void
                                         $ createProcess (proc "firefox" [cs])
                                           { std_err = CreatePipe }
@@ -59,7 +61,7 @@ z|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))|] -- "
 
 -- | The module to handle local filepaths.
 filePathModule :: StrpModule
-filePathModule = StrpModule { strpPattern  = [r|^['"]?(?:/[^/]+)*['"]?$|]
+filePathModule = StrpModule { strpMatch    = (=~ [r|^['"]?(?:/[^/]+)*['"]?$|])
                             , strpFunction = filePathModFunc
                             }
 

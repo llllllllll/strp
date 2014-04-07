@@ -13,20 +13,16 @@ module Strp.Data where
 
 import Control.Applicative ((<$>))
 import Data.List           (find)
-import Text.Regex.PCRE     ((=~))
 
 -- | A module for a pattern to catch and process.
-data StrpModule = StrpModule { strpPattern  :: String -- ^ Regex 'String'.
+data StrpModule = StrpModule { strpMatch    :: String -> Bool
                              , strpFunction :: String -> IO ()
                              }
-
-instance Show StrpModule where
-    show (StrpModule { strpPattern = p }) = p
 
 -- | Searches a list of 'StrpModule's returning the first one if any
 -- that match the source 'String'.
 findModule :: String -> [StrpModule] -> Maybe StrpModule
-findModule src = find ((=~) src . strpPattern)
+findModule src = find (\m -> strpMatch m src)
 
 -- | Processes a 'String' with a list of modules.
 processString :: String -> [StrpModule] -> IO ()
