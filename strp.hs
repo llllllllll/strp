@@ -13,4 +13,5 @@ main = getArgs >>= strp modules
 modules :: [StrpModule]
 modules = [ filePathModule
           , urlModule
+          , searchEngineModule
           ]

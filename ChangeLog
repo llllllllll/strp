@@ -5,10 +5,15 @@
 	* strp.hs: Added filePathModule
 	* Strp/Modules.hs: Added the new filePathModule
 
-2014-04-07
+2014-04-07 Joe Jevnik <joejev@gmail>
 	* Strp/Data.hs: Changes the StrpModule to have a String -> Bool instead
 	of a regex to match.
 	* Strp/Modules.hs: Updated the two modules to reflect the strpMatch
 	change.
 	* README.md: Updated the sections to reflect the change in module
 	design.
+
+2014-05-09 Joe Jevnik <joejev@gmail>
+	* Strp/Modules.hs: Added a searchEngineModule that will be a catch-all
+	module to run the string through a search engine.
+	* strp.hs: Added the searchEngineModule to the default module list.

@@ -13,8 +13,9 @@
 
 module Strp.Modules
     ( module Strp.Data
-    , urlModule      -- :: StrpModule
-    , filePathModule -- :: StrpModule
+    , urlModule          -- :: StrpModule
+    , filePathModule     -- :: StrpModule
+    , searchEngineModule -- :: StrpModule
     ) where
 
 import Strp.Data
@@ -74,3 +75,18 @@ filePathModFunc cs = doesDirectoryExist cs
   where
       runFunc cs = void $ createProcess (proc "xterm" []) { cwd = Just cs }
       f       cs = reverse $ dropWhile (/= '/') $ reverse cs
+
+
+-- | The module to search for a string in a search engine.
+-- CATCH-ALL
+searchEngineModule :: StrpModule
+searchEngineModule =
+    StrpModule { strpMatch    = const True
+               , strpFunction = \cs -> void
+                                $ createProcess (proc "firefox" [mkSearch cs])
+                                      { std_err = CreatePipe }
+               }
+  where
+      mkSearch cs = "www.google.com/#q="
+                    ++ map (\c -> if c == ' ' then '+' else c) cs
+                    ++ "&safe=off"
